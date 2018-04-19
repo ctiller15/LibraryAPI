@@ -7,6 +7,7 @@ using System.Web.Http;
 
 using LibraryAPI.Data;
 using LibraryAPI.Models;
+using LibraryAPI.ViewModels.BookModels;
 
 
 namespace LibraryAPI.Controllers
@@ -14,18 +15,18 @@ namespace LibraryAPI.Controllers
     public class BooksController : ApiController
     {
         // POST: Add a new Book
-        public IHttpActionResult Post([FromBody]Dictionary<string, string> book)
+        public IHttpActionResult Post(PostBook book)
         {
             var newBook = new Book
             {
-                Title = book["Title"],
-                YearPublished = Convert.ToInt32(book["YearPublished"]),
-                Condition = book["Condition"],
+                Title = book.BookTitle,
+                YearPublished = book.YearPublished,
+                Condition = book.Condition,
                 // Don't worry about Author right now...
                 // Don't worry about Genre right now...
-                ISBN = book["ISBN"],
-                IsCheckedOut = Convert.ToBoolean(book["IsCheckedOut"]),
-                DueBackDate = Convert.ToDateTime(book["DueBackDate"])
+                ISBN = book.ISBN,
+                IsCheckedOut = book.IsCheckedOut,
+                DueBackDate = book.DueBackDate
             };
 
             var db = new LibraryContext();

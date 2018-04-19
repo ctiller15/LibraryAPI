@@ -13,13 +13,6 @@ namespace LibraryAPI.Controllers
 {
     public class AuthorsController : ApiController
     {
-        public class SearchParams
-        {
-            public string AuthorName { get; set; }
-            public int? AuthorBorn { get; set; }
-            public int? AuthorDied { get; set; }
-        }
-
         // POST: Add a new Author
         public IHttpActionResult Post(PostParams param)
         {
