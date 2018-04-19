@@ -7,19 +7,27 @@ using System.Web.Http;
 
 using LibraryAPI.Models;
 using LibraryAPI.Data;
+using LibraryAPI.ViewModels.AuthorModels;
 
 namespace LibraryAPI.Controllers
 {
     public class AuthorsController : ApiController
     {
+        public class SearchParams
+        {
+            public string AuthorName { get; set; }
+            public int? AuthorBorn { get; set; }
+            public int? AuthorDied { get; set; }
+        }
+
         // POST: Add a new Author
-        public IHttpActionResult Post([FromBody]Dictionary<string, string> author)
+        public IHttpActionResult Post(PostParams param)
         {
             var newAuthor = new Author
             {
-                Name = author["Name"],
-                Born = Convert.ToInt32(author["Born"]),
-                Died = Convert.ToInt32(author["Died"])
+                Name = param.AuthorName,
+                Born = param.AuthorBorn,
+                Died = param.AuthorDied
             };
 
             var db = new LibraryContext();
