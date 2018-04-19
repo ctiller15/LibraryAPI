@@ -14,6 +14,32 @@ namespace LibraryAPI.Controllers
 {
     public class BooksController : ApiController
     {
+        // GET: Find a book based on title, author, or genre
+        public IEnumerable<Book> Get([FromUri]GetBook book)
+        {
+            using (var db = new LibraryContext())
+            {
+                IQueryable<Book> query = db.Books;
+
+                if(!String.IsNullOrEmpty(book.BookTitle))
+                {
+                    query = query.Where(w => w.Title == book.BookTitle);
+                }
+
+                if (!String.IsNullOrEmpty(book.BookAuthor))
+                {
+                    query = query.Where(w => w.Author.Name == book.BookAuthor);
+                }
+
+                if (!String.IsNullOrEmpty(book.BookGenre))
+                {
+                    query = query.Where(w => w.Genre.DisplayName == book.BookGenre);
+                }
+
+                return query.ToList();
+            }
+        }
+
         // POST: Add a new Book
         public IHttpActionResult Post(PostBook book)
         {
