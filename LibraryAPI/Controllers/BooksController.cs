@@ -27,6 +27,7 @@ namespace LibraryAPI.Controllers
                 IsCheckedOut = Convert.ToBoolean(book["IsCheckedOut"]),
                 DueBackDate = Convert.ToDateTime(book["DueBackDate"])
             };
+
             var db = new LibraryContext();
             db.Books.Add(newBook);
             db.SaveChanges();
