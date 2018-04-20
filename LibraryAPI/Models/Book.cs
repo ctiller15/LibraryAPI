@@ -19,7 +19,7 @@ namespace LibraryAPI.Models
         public Genre Genre { get; set; }
 
         public string ISBN { get; set; }
-        public bool IsCheckedOut { get; set; }
+        public bool IsCheckedOut { get; set; } = true;
         public DateTime DueBackDate { get; set; }
     }
 }

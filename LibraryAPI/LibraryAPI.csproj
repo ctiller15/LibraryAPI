@@ -195,6 +195,10 @@
     <Compile Include="Migrations\201804191820171_CreateTables.Designer.cs">
       <DependentUpon>201804191820171_CreateTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804201627504_ChangeDefaultCheckedOutValue.cs" />
+    <Compile Include="Migrations\201804201627504_ChangeDefaultCheckedOutValue.Designer.cs">
+      <DependentUpon>201804201627504_ChangeDefaultCheckedOutValue.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
@@ -277,6 +281,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201804191820171_CreateTables.resx">
       <DependentUpon>201804191820171_CreateTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804201627504_ChangeDefaultCheckedOutValue.resx">
+      <DependentUpon>201804201627504_ChangeDefaultCheckedOutValue.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
