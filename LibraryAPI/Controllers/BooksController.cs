@@ -20,8 +20,6 @@ namespace LibraryAPI.Controllers
             var db = new LibraryContext();
             if (!String.IsNullOrEmpty(book.AuthorName))
             {
-                string authorName = book.AuthorName;
-
                 var match = db.Authors.FirstOrDefault(x => x.Name == book.AuthorName);
 
                 if (match != null)
@@ -49,8 +47,6 @@ namespace LibraryAPI.Controllers
             var db = new LibraryContext();
             if (!String.IsNullOrEmpty(book.GenreName))
             {
-                string genreName = book.GenreName;
-
                 var match = db.Genres.FirstOrDefault(x => x.DisplayName == book.GenreName);
 
                 if (match != null)
@@ -84,7 +80,6 @@ namespace LibraryAPI.Controllers
                     query = query.Where(w => w.Title == book.BookTitle);
                 }
 
-                // TODO: Currently works with just Title. Get working w/ Author and Genre!
                 if (!String.IsNullOrEmpty(book.BookAuthor))
                 {
                     query = query.Where(w => w.Author.Name == book.BookAuthor);
