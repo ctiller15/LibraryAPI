@@ -149,7 +149,8 @@ namespace LibraryAPI.Controllers
             {
                 BookID = bookID,
                 TimeStamp = DateTime.Now,
-                Email = userCheckout.Email
+                Email = userCheckout.Email,
+                BookStatus = "Checking out"
             };
             db.Checkouts.Add(checkout);
             db.SaveChanges();
@@ -169,7 +170,8 @@ namespace LibraryAPI.Controllers
             {
                 BookID = bookID,
                 TimeStamp = DateTime.Now,
-                Email = userCheckin.Email
+                Email = userCheckin.Email,
+                BookStatus = "Checking in"
             };
             db.Checkouts.Add(checkin);
             db.SaveChanges();
