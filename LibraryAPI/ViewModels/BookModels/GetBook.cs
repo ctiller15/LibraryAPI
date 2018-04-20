@@ -10,6 +10,5 @@ namespace LibraryAPI.ViewModels.BookModels
         public string BookTitle { get; set; }
         public string BookAuthor { get; set; }
         public string BookGenre { get; set; }
-        public bool? IsCheckedOut { get; set; }
     }
 }

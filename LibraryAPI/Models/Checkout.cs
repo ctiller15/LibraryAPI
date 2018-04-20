@@ -14,5 +14,6 @@ namespace LibraryAPI.Models
 
         public DateTime TimeStamp { get; set; }
         public string Email { get; set; }
+        public string BookStatus { get; set; }
     }
 }

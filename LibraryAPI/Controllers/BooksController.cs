@@ -8,6 +8,7 @@ using System.Web.Http;
 using LibraryAPI.Data;
 using LibraryAPI.Models;
 using LibraryAPI.ViewModels.BookModels;
+using LibraryAPI.ViewModels.CheckoutModels;
 
 
 namespace LibraryAPI.Controllers
@@ -68,39 +69,43 @@ namespace LibraryAPI.Controllers
             return db.Genres.FirstOrDefault(x => x.DisplayName == book.GenreName);
         }
 
+
         // GET: Find a book based on title, author, or genre
-        public IEnumerable<Book> Get([FromUri]GetBook book)
+        [Route("api/books")]
+        [HttpGet]
+        public IEnumerable<Book> SearchBooks([FromUri]GetBook book)
         {
             using (var db = new LibraryContext())
             {
                 IQueryable<Book> query = db.Books;
 
-                if(!String.IsNullOrEmpty(book.BookTitle))
+                if(book != null)
                 {
-                    query = query.Where(w => w.Title == book.BookTitle);
+                    if (!String.IsNullOrEmpty(book.BookTitle))
+                    {
+                        query = query.Where(w => w.Title == book.BookTitle);
+                    }
+
+                    if (!String.IsNullOrEmpty(book.BookAuthor))
+                    {
+                        query = query.Where(w => w.Author.Name == book.BookAuthor);
+                    }
+
+                    if (!String.IsNullOrEmpty(book.BookGenre))
+                    {
+                        query = query.Where(w => w.Genre.DisplayName == book.BookGenre);
+                    }
                 }
 
-                if (!String.IsNullOrEmpty(book.BookAuthor))
-                {
-                    query = query.Where(w => w.Author.Name == book.BookAuthor);
-                }
-
-                if (!String.IsNullOrEmpty(book.BookGenre))
-                {
-                    query = query.Where(w => w.Genre.DisplayName == book.BookGenre);
-                }
-
-                if(book.IsCheckedOut != null)
-                {
-                    query = query.Where(w => w.IsCheckedOut == book.IsCheckedOut);
-                }
 
                 return query.ToList();
             }
         }
 
         // POST: Add a new Book
-        public IHttpActionResult Post(PostBook book)
+        [Route("api/books")]
+        [HttpPost]
+        public IHttpActionResult CreateBook(PostBook book)
         {
             Author author = CheckAuthor(book);
             Genre genre = CheckGenre(book);
@@ -130,12 +135,23 @@ namespace LibraryAPI.Controllers
             return Ok(newBook);
         }
 
-        // PUT: Update an existing book.
-        public IHttpActionResult Put(int ID, [FromBody] UpdateBook book)
+        // PUT: Checkout an existing book.
+        [Route("api/books/checkout/{ID?}")]
+        [HttpPut]
+        public IHttpActionResult Put(string ID, PutCheckout userCheckout)
         {
+            int bookID = Convert.ToInt32(ID);
             var db = new LibraryContext();
-            var BookToUpdate = db.Books.First(x => x.ID == ID);
-            BookToUpdate.IsCheckedOut = book.IsCheckedOut;
+            var BookToUpdate = db.Books.First(x => x.ID == bookID);
+            BookToUpdate.IsCheckedOut = true;
+            // Create the checkout.
+            var checkout = new Checkout
+            {
+                BookID = bookID,
+                TimeStamp = DateTime.Now,
+                Email = userCheckout.Email
+            };
+            db.Checkouts.Add(checkout);
             db.SaveChanges();
             return Ok(BookToUpdate);
         }
