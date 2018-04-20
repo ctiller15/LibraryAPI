@@ -43,6 +43,35 @@ namespace LibraryAPI.Controllers
             return db.Authors.FirstOrDefault(x => x.Name == book.AuthorName);
         }
 
+        static Genre CheckGenre(PostBook book)
+        {
+            Genre genre = null;
+            var db = new LibraryContext();
+            if (!String.IsNullOrEmpty(book.GenreName))
+            {
+                string genreName = book.GenreName;
+
+                var match = db.Genres.FirstOrDefault(x => x.DisplayName == book.GenreName);
+
+                if (match != null)
+                {
+                    // Reference match in DB, set it to author.
+                    genre = match;
+                }
+                else
+                {
+                    // Create author.
+                    genre = new Genre
+                    {
+                        DisplayName = book.GenreName
+                    };
+                    db.Genres.Add(genre);
+                    db.SaveChanges();
+                }
+            }
+            return db.Genres.FirstOrDefault(x => x.DisplayName == book.GenreName);
+        }
+
         // GET: Find a book based on title, author, or genre
         public IEnumerable<Book> Get([FromUri]GetBook book)
         {
@@ -74,13 +103,13 @@ namespace LibraryAPI.Controllers
         public IHttpActionResult Post(PostBook book)
         {
             Author author = CheckAuthor(book);
+            Genre genre = CheckGenre(book);
 
             var newBook = new Book
             {
                 Title = book.BookTitle,
                 YearPublished = book.YearPublished,
                 Condition = book.Condition,
-                // Don't worry about Author right now...
 
                 // Get Author name.
                 // Check if it currently exists in db.
@@ -91,6 +120,7 @@ namespace LibraryAPI.Controllers
                 //Author = author,
 
                 // Don't worry about Genre right now...
+                GenreID = genre.ID,
                 ISBN = book.ISBN,
                 IsCheckedOut = book.IsCheckedOut,
                 DueBackDate = book.DueBackDate
@@ -100,6 +130,7 @@ namespace LibraryAPI.Controllers
             db.Books.Add(newBook);
             db.SaveChanges();
             newBook.Author = author;
+            newBook.Genre = genre;
             return Ok(newBook);
         }
 
