@@ -112,15 +112,11 @@ namespace LibraryAPI.Controllers
                 Condition = book.Condition,
 
                 // Get Author name.
-                // Check if it currently exists in db.
-                // If it exists in db, just grab the old one.
-                // Otherwise, create it.
-
                 AuthorID = author.ID,
-                //Author = author,
 
-                // Don't worry about Genre right now...
+                // Get Genre.
                 GenreID = genre.ID,
+
                 ISBN = book.ISBN,
                 IsCheckedOut = book.IsCheckedOut,
                 DueBackDate = book.DueBackDate
@@ -134,6 +130,15 @@ namespace LibraryAPI.Controllers
             return Ok(newBook);
         }
 
+        // PUT: Update an existing book.
+        public IHttpActionResult Put(int ID, [FromBody] UpdateBook book)
+        {
+            var db = new LibraryContext();
+            var BookToUpdate = db.Books.First(x => x.ID == ID);
+            BookToUpdate.IsCheckedOut = book.IsCheckedOut;
+            db.SaveChanges();
+            return Ok(BookToUpdate);
+        }
 
     }
 }

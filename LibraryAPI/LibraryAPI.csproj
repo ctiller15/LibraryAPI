@@ -204,6 +204,7 @@
     <Compile Include="ViewModels\AuthorModels\PostParams.cs" />
     <Compile Include="ViewModels\BookModels\GetBook.cs" />
     <Compile Include="ViewModels\BookModels\PostBook.cs" />
+    <Compile Include="ViewModels\BookModels\UpdateBook.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
