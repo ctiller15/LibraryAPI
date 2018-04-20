@@ -138,7 +138,7 @@ namespace LibraryAPI.Controllers
         // PUT: Checkout an existing book.
         [Route("api/books/checkout/{ID?}")]
         [HttpPut]
-        public IHttpActionResult Put(string ID, PutCheckout userCheckout)
+        public IHttpActionResult CheckBookOut(string ID, PutCheckout userCheckout)
         {
             int bookID = Convert.ToInt32(ID);
             var db = new LibraryContext();
@@ -155,6 +155,27 @@ namespace LibraryAPI.Controllers
             db.SaveChanges();
             return Ok(BookToUpdate);
         }
+
+        [Route("api/books/checkin/{ID?}")]
+        [HttpPut]
+        public IHttpActionResult CheckBookIn(string ID, PutCheckout userCheckin)
+        {
+            int bookID = Convert.ToInt32(ID);
+            var db = new LibraryContext();
+            var BookToUpdate = db.Books.First(x => x.ID == bookID);
+            BookToUpdate.IsCheckedOut = false;
+            // Create the checkin.
+            var checkin = new Checkout
+            {
+                BookID = bookID,
+                TimeStamp = DateTime.Now,
+                Email = userCheckin.Email
+            };
+            db.Checkouts.Add(checkin);
+            db.SaveChanges();
+            return Ok(BookToUpdate);
+        }
+
 
     }
 }

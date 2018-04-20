@@ -199,6 +199,10 @@
     <Compile Include="Migrations\201804201627504_ChangeDefaultCheckedOutValue.Designer.cs">
       <DependentUpon>201804201627504_ChangeDefaultCheckedOutValue.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804201959287_AddBookStatusPropertyToCheckout.cs" />
+    <Compile Include="Migrations\201804201959287_AddBookStatusPropertyToCheckout.Designer.cs">
+      <DependentUpon>201804201959287_AddBookStatusPropertyToCheckout.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
@@ -285,6 +289,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804201627504_ChangeDefaultCheckedOutValue.resx">
       <DependentUpon>201804201627504_ChangeDefaultCheckedOutValue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804201959287_AddBookStatusPropertyToCheckout.resx">
+      <DependentUpon>201804201959287_AddBookStatusPropertyToCheckout.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
