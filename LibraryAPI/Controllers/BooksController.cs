@@ -90,6 +90,11 @@ namespace LibraryAPI.Controllers
                     query = query.Where(w => w.Genre.DisplayName == book.BookGenre);
                 }
 
+                if(book.IsCheckedOut != null)
+                {
+                    query = query.Where(w => w.IsCheckedOut == book.IsCheckedOut);
+                }
+
                 return query.ToList();
             }
         }
