@@ -147,7 +147,7 @@ namespace LibraryAPI.Controllers
             // Create the checkout.
             var checkout = new Checkout
             {
-                BookID = bookID,
+                //BookID = bookID,
                 TimeStamp = DateTime.Now,
                 Email = userCheckout.Email,
                 BookStatus = "Checking out"
@@ -168,7 +168,7 @@ namespace LibraryAPI.Controllers
             // Create the checkin.
             var checkin = new Checkout
             {
-                BookID = bookID,
+                //BookID = bookID,
                 TimeStamp = DateTime.Now,
                 Email = userCheckin.Email,
                 BookStatus = "Checking in"
