@@ -69,6 +69,11 @@ namespace LibraryAPI.Controllers
             return db.Genres.FirstOrDefault(x => x.DisplayName == book.GenreName);
         }
 
+        //public Book ShallowCopy()
+        //{
+        //    return (Book)this.MemberwiseClone();
+        //}
+
 
         // GET: Find a book based on title, author, or genre
         [Route("api/books")]
@@ -152,6 +157,7 @@ namespace LibraryAPI.Controllers
                 Email = userCheckout.Email,
                 BookStatus = "Checking out"
             };
+            checkout.Book.Add(BookToUpdate);
             db.Checkouts.Add(checkout);
             db.SaveChanges();
             return Ok(BookToUpdate);
@@ -164,7 +170,9 @@ namespace LibraryAPI.Controllers
             int bookID = Convert.ToInt32(ID);
             var db = new LibraryContext();
             var BookToUpdate = db.Books.First(x => x.ID == bookID);
+
             BookToUpdate.IsCheckedOut = false;
+            //var bodyBook = BookToUpdate.ShallowCopy();
             // Create the checkin.
             var checkin = new Checkout
             {
@@ -173,9 +181,11 @@ namespace LibraryAPI.Controllers
                 Email = userCheckin.Email,
                 BookStatus = "Checking in"
             };
-            db.Checkouts.Add(checkin);
+            BookToUpdate.Checkout.Add(checkin);
+            //checkin.Book.Add(BookToUpdate);
             db.SaveChanges();
-            return Ok(BookToUpdate);
+            return Ok();
+            //return Ok(checkin);
         }
 
 
