@@ -157,10 +157,12 @@ namespace LibraryAPI.Controllers
                 Email = userCheckout.Email,
                 BookStatus = "Checking out"
             };
-            checkout.Book.Add(BookToUpdate);
-            db.Checkouts.Add(checkout);
+            BookToUpdate.Checkout.Add(checkout);
+            //db.Checkouts.Add(checkout);
+            var returnData = new PutCheckoutBody(BookToUpdate, checkout);
+
             db.SaveChanges();
-            return Ok(BookToUpdate);
+            return Ok(returnData);
         }
 
         [Route("api/books/checkin/{ID?}")]
@@ -172,20 +174,23 @@ namespace LibraryAPI.Controllers
             var BookToUpdate = db.Books.First(x => x.ID == bookID);
 
             BookToUpdate.IsCheckedOut = false;
-            //var bodyBook = BookToUpdate.ShallowCopy();
             // Create the checkin.
             var checkin = new Checkout
             {
-                //BookID = bookID,
                 TimeStamp = DateTime.Now,
                 Email = userCheckin.Email,
                 BookStatus = "Checking in"
             };
             BookToUpdate.Checkout.Add(checkin);
-            //checkin.Book.Add(BookToUpdate);
+
+            //Creating the return data.
+            //Turns out I needed another model for this.
+            // It may be possible and/or ideal to just make sure your first model functions for both the request and the response.
+            // The database model should not be returned.
+            var returnData = new PutCheckoutBody(BookToUpdate, checkin);
+
             db.SaveChanges();
-            return Ok();
-            //return Ok(checkin);
+            return Ok(returnData);
         }
 
 

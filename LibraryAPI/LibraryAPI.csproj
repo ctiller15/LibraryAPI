@@ -218,6 +218,7 @@
     <Compile Include="ViewModels\BookModels\PostBook.cs" />
     <Compile Include="ViewModels\BookModels\UpdateBook.cs" />
     <Compile Include="ViewModels\CheckoutModels\PutCheckout.cs" />
+    <Compile Include="ViewModels\CheckoutModels\PutCheckoutBody.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
