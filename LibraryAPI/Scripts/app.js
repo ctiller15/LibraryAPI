@@ -8,6 +8,11 @@ angular.module("LibraryApp", [])
         // The book Information to be returned.
         let bookInfo = {};
 
+        let currentBookID = "";
+        let currentCheckoutProcess = "";
+
+        $scope.checkoutProcess = false;
+
         // The bookList value to be returned.
         $scope.bookList;
 
@@ -19,6 +24,8 @@ angular.module("LibraryApp", [])
         };
 
         $scope.greeting = "Hello World!";
+
+        $scope.userEmail = "";
 
         $scope.searchBooks = () => {
             // Grab the scope information.
@@ -54,6 +61,24 @@ angular.module("LibraryApp", [])
             getBooks(searchURL);
         }
 
+        $scope.checkOutIn = (id, type) => {
+            console.log(id, type);
+            currentBookID = id;
+            currentCheckout = type;
+            $scope.checkoutProcess = true;
+            // if checking in, just run the function.
+            if (currentCheckout == 'checkin') {
+                putBook(id, currentCheckout);
+            }
+        }
+
+        $scope.checkOut = () => {
+            let userEmail = $scope.userEmail;
+            $scope.userEmail = "";
+            putBook(currentBookID, currentCheckout, userEmail);
+
+        }
+
         // does a simple GET request to get all books.
         const getBooks = (url) => {
             return $http({
@@ -66,6 +91,22 @@ angular.module("LibraryApp", [])
             });
         }
 
+        // does a simple PUT request to check out a book.
+        const putBook = (id, type, email) => {
+            console.log(id, type);
+            return $http({
+                method: "PUT",
+                url: `/api/books/${type}/${id}`,
+                data: {
+                    Email: email
+                }
+            }).then(response => {
+                console.log(response);
+                $scope.checkoutProcess = false;
+                // Now update all books.
+                getBooks('/api/books');
+            });
+        }
 
 
     }]);

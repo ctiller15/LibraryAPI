@@ -45,11 +45,17 @@
                 </section>
 
                 <section ng-class="'user-Option'">
-                    <button ng-if="book.IsCheckedOut">Check book in.</button>
-                    <button ng-if="!book.IsCheckedOut">Check book out.</button>
+                    <button ng-if="!book.IsCheckedOut" ng-click="checkOutIn(book.ID , 'checkout')">Check book out</button>
+                    <button ng-if="book.IsCheckedOut" ng-click="checkOutIn(book.ID , 'checkin')">Check book in</button>
                 </section>
             </section>
 
+        </section>
+        <section ng-show="checkoutProcess" ng-class="'results-checkout'">
+            <form>
+                <input type="text" placeholder="email" ng-model="userEmail"/>
+                <button ng-click="checkOut()">Check book out</button>
+            </form>
         </section>
     </section>
 </section>
