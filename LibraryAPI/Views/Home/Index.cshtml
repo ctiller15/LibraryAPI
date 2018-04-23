@@ -14,21 +14,39 @@
 
     <section ng-class="'search-form'">
         <form>
-            <input ng-model="bookInfo.Title" />
-            <input ng-model="bookInfo.Author" />
-            <input ng-model="bookInfo.Genre" />
+            <input type="text" ng-model="bookInfo.Title" placeholder="Book Title"/>
+            <input type="text" ng-model="bookInfo.Author" placeholder="Book Author"/>
+            <input type="text" ng-model="bookInfo.Genre" placeholder="Book Genre"/>
         </form>
     </section>
 
     <section ng-class="'search-results'">
         <section ng-repeat="book in bookList">
-            <section ng-class="'results-row'">
-                <section ng-class="'result-id'">
+            <section ng-class="'results-row'" class="row">
+                <section ng-class="'result-id'" class="col-md-1">
                     {{book.ID}}
                 </section>
 
-                <section ng-class="'book-title'">
+                <section ng-class="'book-title'" class="col-md-1">
                     {{book.Title}}
+                </section>
+
+                @* TODO: Update so that user can see Author's name in addition to all other pieces of data. *@
+                <section ng-class="'book-author'" class="col-md-1">
+                    {{book.AuthorID}}
+                </section>
+
+                <section ng-class="'book-genre'" class="col-md-1">
+                    {{book.Genre}}
+                </section>
+
+                <section ng-class="'checkedOut'" class="col-md-1">
+                    {{book.IsCheckedOut}}
+                </section>
+
+                <section ng-class="'user-Option'">
+                    <button ng-if="book.IsCheckedOut">Check book in.</button>
+                    <button ng-if="!book.IsCheckedOut">Check book out.</button>
                 </section>
             </section>
 
