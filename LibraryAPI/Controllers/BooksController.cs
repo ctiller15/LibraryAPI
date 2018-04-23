@@ -69,12 +69,6 @@ namespace LibraryAPI.Controllers
             return db.Genres.FirstOrDefault(x => x.DisplayName == book.GenreName);
         }
 
-        //public Book ShallowCopy()
-        //{
-        //    return (Book)this.MemberwiseClone();
-        //}
-
-
         // GET: Find a book based on title, author, or genre
         [Route("api/books")]
         [HttpGet]

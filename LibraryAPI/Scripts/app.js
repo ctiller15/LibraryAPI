@@ -5,4 +5,13 @@ angular.module("LibraryApp", [])
 
         $scope.greeting = "Hello World!";
 
+        $scope.getBooks = () => {
+            $http({
+                method: "GET",
+                url: "/api/books"
+            }).then(response => {
+                console.log(response.data);
+            });
+        }
+
     }]);
