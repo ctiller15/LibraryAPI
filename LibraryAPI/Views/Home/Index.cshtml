@@ -15,9 +15,18 @@
         </form>
     </section>
 
-    <section ng-class="'search-results'">
-        <section ng-if="searchIsActive"></section>
-        <section ng-repeat="book in bookList">
+    <section ng-class="'search-results'" class="panel panel-heading">
+        <section ng-show="searchIsActive">
+            <section ng-class="'results-topbar'" class="row">
+                <section class="col-md-1" ng-class="'result-id'">Book ID</section>
+                <section class="col-md-1" ng-class="'book-title'">Book Title</section>
+                <section class="col-md-1" ng-class="'book-author'">Book Author</section>
+                <section class="col-md-1" ng-class="'book-genre'">Book Genre</section>
+                <section class="col-md-1" ng-class="'checkedOut'">Checkout Status</section>
+            </section>
+        </section>
+        <ul class="list-group">
+        <li class="list-group-item" ng-repeat="book in bookList">
             <section ng-class="'results-row'" class="row">
                 <section ng-class="'result-id'" class="col-md-1">
                     {{book.ID}}
@@ -46,7 +55,8 @@
                 </section>
             </section>
 
-        </section>
+        </li>
+        </ul>
         <section ng-show="checkoutProcess" ng-class="'results-checkout'">
             <form>
                 <input type="text" placeholder="email" ng-model="userEmail"/>

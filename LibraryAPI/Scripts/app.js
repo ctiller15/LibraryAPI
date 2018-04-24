@@ -12,6 +12,7 @@ angular.module("LibraryApp", [])
         let currentCheckoutProcess = "";
 
         $scope.checkoutProcess = false;
+        $scope.searchIsActive = false;
 
         // The bookList value to be returned.
         $scope.bookList;
@@ -84,6 +85,7 @@ angular.module("LibraryApp", [])
                 method: "GET",
                 url: url,
             }).then(response => {
+                $scope.searchIsActive = true;
                 bookList = response.data;
                 console.log(bookList);
                 $scope.bookList = bookList;
