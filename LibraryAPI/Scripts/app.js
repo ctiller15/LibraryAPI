@@ -83,7 +83,7 @@ angular.module("LibraryApp", [])
             let userEmail = $scope.userEmail;
             $scope.userEmail = "";
             putBook(currentBookID, currentCheckout, userEmail);
-
+            $("#myModal").modal("hide");
         }
 
         // does a simple GET request to get all books.
