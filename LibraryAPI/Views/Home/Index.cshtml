@@ -1,11 +1,13 @@
 ﻿
 <section class="angular-app" ng-app="LibraryApp" ng-controller="mainAppController">
+
+    @* The introduction section. *@
     <div class="jumbotron">
         <h1>Welcome to the Library!</h1>
         <p class="lead">Search for a book to check out or return.</a></p>
-
     </div>
 
+    @* The search form. *@
     <section ng-class="'search-form'" class="form-group navbar-form">
         <form>
             <input class="form-control" type="text" ng-model="bookInfo.Title" placeholder="Book Title" />
@@ -15,7 +17,10 @@
         </form>
     </section>
 
+    @* The search results. *@
     <section ng-class="'search-results'" class="panel panel-default">
+
+        @* The top bar, lists categories. *@
         <section ng-show="searchIsActive">
             <section ng-class="'results-topbar'" class="row panel-heading">
                 <section class="col-md-1" ng-class="'result-id'">Book ID</section>
@@ -25,46 +30,47 @@
                 <section class="col-md-2" ng-class="'checkedOut'">Checkout Status</section>
             </section>
         </section>
+
+        @* All of the results. *@
         <ul class="list-group">
-        <li class="list-group-item" ng-repeat="book in bookList">
-            <section ng-class="'results-row'" class="row">
-                <section ng-class="'result-id'" class="col-md-1">
-                    {{book.ID}}
-                </section>
+            <li class="list-group-item" ng-repeat="book in bookList">
+                <section ng-class="'results-row'" class="row">
+                    <section ng-class="'result-id'" class="col-md-1">
+                        {{book.ID}}
+                    </section>
 
-                <section ng-class="'book-title'" class="col-md-3">
-                    {{book.Title}}
-                </section>
+                    <section ng-class="'book-title'" class="col-md-3">
+                        {{book.Title}}
+                    </section>
 
-                @* TODO: Update so that user can see Author's name in addition to all other pieces of data. *@
-                <section ng-class="'book-author'" class="col-md-2">
-                    {{book.Author.Name}}
-                </section>
+                    <section ng-class="'book-author'" class="col-md-2">
+                        {{book.Author.Name}}
+                    </section>
 
-                <section ng-class="'book-genre'" class="col-md-2">
-                    {{book.Genre.DisplayName}}
-                </section>
+                    <section ng-class="'book-genre'" class="col-md-2">
+                        {{book.Genre.DisplayName}}
+                    </section>
 
-                <section ng-class="'checkedOut'" class="col-md-2">
-                    {{book.IsCheckedOut}}
-                </section>
+                    <section ng-class="'checkedOut'" class="col-md-2">
+                        {{book.IsCheckedOut}}
+                    </section>
 
-                <section ng-class="'user-Option'" class="col-md-2">
-                    <button class="btn btn-primary" ng-if="!book.IsCheckedOut" ng-click="checkOutIn(book.ID , 'checkout')">Check out</button>
-                    <button class="btn btn-primary" ng-if="book.IsCheckedOut" ng-click="checkOutIn(book.ID , 'checkin')">Return</button>
+                    <section ng-class="'user-Option'" class="col-md-2">
+                        <button class="btn btn-primary" ng-if="!book.IsCheckedOut" ng-click="checkOutIn(book.ID , 'checkout')">Check out</button>
+                        <button class="btn btn-primary" ng-if="book.IsCheckedOut" ng-click="checkOutIn(book.ID , 'checkin')">Return</button>
+                    </section>
                 </section>
-            </section>
-
-        </li>
+            </li>
         </ul>
+
+        <!-- Checkout Modal -->
         <section ng-show="checkoutProcess" ng-class="'results-checkout'">
-            <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                            <h4 class="modal-title" id="myModalLabel">Check out a book</h4>
                         </div>
                         <div class="modal-body">
                             <form>
@@ -79,9 +85,8 @@
                     </div>
                 </div>
             </div>
-
-
         </section>
+
     </section>
 </section>
 
