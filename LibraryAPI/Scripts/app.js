@@ -30,7 +30,6 @@ angular.module("LibraryApp", [])
         $scope.searchBooks = () => {
             // Grab the scope information.
             bookInfo = $scope.bookInfo;
-            console.log(bookInfo);
             let title = bookInfo.Title;
             let author = bookInfo.Author;
             let genre = bookInfo.Genre;
