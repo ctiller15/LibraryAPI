@@ -15,14 +15,14 @@
         </form>
     </section>
 
-    <section ng-class="'search-results'" class="panel panel-heading">
+    <section ng-class="'search-results'" class="panel panel-default">
         <section ng-show="searchIsActive">
-            <section ng-class="'results-topbar'" class="row">
+            <section ng-class="'results-topbar'" class="row panel-heading">
                 <section class="col-md-1" ng-class="'result-id'">Book ID</section>
-                <section class="col-md-1" ng-class="'book-title'">Book Title</section>
-                <section class="col-md-1" ng-class="'book-author'">Book Author</section>
-                <section class="col-md-1" ng-class="'book-genre'">Book Genre</section>
-                <section class="col-md-1" ng-class="'checkedOut'">Checkout Status</section>
+                <section class="col-md-3" ng-class="'book-title'">Book Title</section>
+                <section class="col-md-2" ng-class="'book-author'">Book Author</section>
+                <section class="col-md-2" ng-class="'book-genre'">Book Genre</section>
+                <section class="col-md-2" ng-class="'checkedOut'">Checkout Status</section>
             </section>
         </section>
         <ul class="list-group">
@@ -32,24 +32,24 @@
                     {{book.ID}}
                 </section>
 
-                <section ng-class="'book-title'" class="col-md-1">
+                <section ng-class="'book-title'" class="col-md-3">
                     {{book.Title}}
                 </section>
 
                 @* TODO: Update so that user can see Author's name in addition to all other pieces of data. *@
-                <section ng-class="'book-author'" class="col-md-1">
+                <section ng-class="'book-author'" class="col-md-2">
                     {{book.AuthorID}}
                 </section>
 
-                <section ng-class="'book-genre'" class="col-md-1">
-                    {{book.Genre}}
+                <section ng-class="'book-genre'" class="col-md-2">
+                    {{book.GenreID}}
                 </section>
 
-                <section ng-class="'checkedOut'" class="col-md-1">
+                <section ng-class="'checkedOut'" class="col-md-2">
                     {{book.IsCheckedOut}}
                 </section>
 
-                <section ng-class="'user-Option'">
+                <section ng-class="'user-Option'" class="col-md-2">
                     <button ng-if="!book.IsCheckedOut" ng-click="checkOutIn(book.ID , 'checkout')">Check book out</button>
                     <button ng-if="book.IsCheckedOut" ng-click="checkOutIn(book.ID , 'checkin')">Check book in</button>
                 </section>
