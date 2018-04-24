@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -9,65 +10,14 @@ using LibraryAPI.Data;
 using LibraryAPI.Models;
 using LibraryAPI.ViewModels.BookModels;
 using LibraryAPI.ViewModels.CheckoutModels;
+using LibraryAPI.Services;
 
 
 namespace LibraryAPI.Controllers
 {
     public class BooksController : ApiController
     {
-        static Author CheckAuthor(PostBook book)
-        {
-            Author author = null;
-            var db = new LibraryContext();
-            if (!String.IsNullOrEmpty(book.AuthorName))
-            {
-                var match = db.Authors.FirstOrDefault(x => x.Name == book.AuthorName);
 
-                if (match != null)
-                {
-                    // Reference match in DB, set it to author.
-                    author = match;
-                }
-                else
-                {
-                    // Create author.
-                    author = new Author
-                    {
-                        Name = book.AuthorName
-                    };
-                    db.Authors.Add(author);
-                    db.SaveChanges();
-                }
-            }
-            return db.Authors.FirstOrDefault(x => x.Name == book.AuthorName);
-        }
-
-        static Genre CheckGenre(PostBook book)
-        {
-            Genre genre = null;
-            var db = new LibraryContext();
-            if (!String.IsNullOrEmpty(book.GenreName))
-            {
-                var match = db.Genres.FirstOrDefault(x => x.DisplayName == book.GenreName);
-
-                if (match != null)
-                {
-                    // Reference match in DB, set it to author.
-                    genre = match;
-                }
-                else
-                {
-                    // Create author.
-                    genre = new Genre
-                    {
-                        DisplayName = book.GenreName
-                    };
-                    db.Genres.Add(genre);
-                    db.SaveChanges();
-                }
-            }
-            return db.Genres.FirstOrDefault(x => x.DisplayName == book.GenreName);
-        }
 
         // GET: Find a book based on title, author, or genre
         [Route("api/books")]
@@ -76,9 +26,12 @@ namespace LibraryAPI.Controllers
         {
             using (var db = new LibraryContext())
             {
-                IQueryable<Book> query = db.Books;
+                //IQueryable<Book> query = db.Books;
+                var query = db.Books
+                            .Include(i => i.Author)
+                            .Include(i => i.Genre);
 
-                if(book != null)
+                if (book != null)
                 {
                     if (!String.IsNullOrEmpty(book.BookTitle))
                     {
@@ -106,8 +59,8 @@ namespace LibraryAPI.Controllers
         [HttpPost]
         public IHttpActionResult CreateBook(PostBook book)
         {
-            Author author = CheckAuthor(book);
-            Genre genre = CheckGenre(book);
+            Author author = DataChecks.CheckAuthor(book);
+            Genre genre = DataChecks.CheckGenre(book);
 
             var newBook = new Book
             {

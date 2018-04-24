@@ -62,13 +62,20 @@ angular.module("LibraryApp", [])
         }
 
         $scope.checkOutIn = (id, type) => {
+            console.log("This is a string!");
             console.log(id, type);
             currentBookID = id;
             currentCheckout = type;
+            console.log("This is a string!");
+            console.log(currentCheckout);
             $scope.checkoutProcess = true;
             // if checking in, just run the function.
+
             if (currentCheckout == 'checkin') {
                 putBook(id, currentCheckout);
+            } else {
+                console.log("showing modal...");
+                $("#myModal").modal("show");
             }
         }
 
