@@ -31,25 +31,9 @@ namespace LibraryAPI.Controllers
                             .Include(i => i.Author)
                             .Include(i => i.Genre);
 
-                if (book != null)
-                {
-                    if (!String.IsNullOrEmpty(book.BookTitle))
-                    {
-                        query = query.Where(w => w.Title.Contains(book.BookTitle));
-                    }
+                var parsedQuery = Query.ParseBook(book, query);
 
-                    if (!String.IsNullOrEmpty(book.BookAuthor))
-                    {
-                        query = query.Where(w => w.Author.Name.Contains(book.BookAuthor));
-                    }
-
-                    if (!String.IsNullOrEmpty(book.BookGenre))
-                    {
-                        query = query.Where(w => w.Genre.DisplayName.Contains(book.BookGenre));
-                    }
-                }
-
-                return query.ToList();
+                return parsedQuery.ToList();
             }
         }
 
@@ -86,6 +70,7 @@ namespace LibraryAPI.Controllers
             return Ok(newBook);
         }
 
+        // Not DRY at all...
         // PUT: Checkout an existing book.
         [Route("api/books/checkout/{ID?}")]
         [HttpPut]

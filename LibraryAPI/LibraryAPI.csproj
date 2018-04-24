@@ -214,6 +214,7 @@
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataChecks.cs" />
+    <Compile Include="Services\Query.cs" />
     <Compile Include="ViewModels\AuthorModels\PostParams.cs" />
     <Compile Include="ViewModels\BookModels\GetBook.cs" />
     <Compile Include="ViewModels\BookModels\PostBook.cs" />
