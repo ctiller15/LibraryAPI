@@ -207,6 +207,10 @@
     <Compile Include="Migrations\201804212350548_MakeCheckoutBooksManyToMany.Designer.cs">
       <DependentUpon>201804212350548_MakeCheckoutBooksManyToMany.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804241510573_MakeDueBackDateNullable.cs" />
+    <Compile Include="Migrations\201804241510573_MakeDueBackDateNullable.Designer.cs">
+      <DependentUpon>201804241510573_MakeDueBackDateNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
@@ -307,6 +311,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804212350548_MakeCheckoutBooksManyToMany.resx">
       <DependentUpon>201804212350548_MakeCheckoutBooksManyToMany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804241510573_MakeDueBackDateNullable.resx">
+      <DependentUpon>201804241510573_MakeDueBackDateNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

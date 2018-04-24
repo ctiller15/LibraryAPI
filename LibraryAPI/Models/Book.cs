@@ -20,7 +20,7 @@ namespace LibraryAPI.Models
 
         public string ISBN { get; set; }
         public bool IsCheckedOut { get; set; } = true;
-        public DateTime DueBackDate { get; set; }
+        public DateTime? DueBackDate { get; set; }
 
         public ICollection<Checkout> Checkout { get; set; } = new HashSet<Checkout>();
     }

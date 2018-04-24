@@ -26,7 +26,6 @@ namespace LibraryAPI.Controllers
         {
             using (var db = new LibraryContext())
             {
-                //IQueryable<Book> query = db.Books;
                 var query = db.Books
                             .Include(i => i.Author)
                             .Include(i => i.Genre);
@@ -44,6 +43,13 @@ namespace LibraryAPI.Controllers
         {
             Author author = DataChecks.CheckAuthor(book);
             Genre genre = DataChecks.CheckGenre(book);
+
+
+            // The null value of DateTime is 0001, 01, 01.
+            if (book.DueBackDate == new DateTime(0001,01,01))
+            {
+                book.DueBackDate = new DateTime(1990, 01, 01);
+            }
 
             var newBook = new Book
             {
@@ -65,6 +71,7 @@ namespace LibraryAPI.Controllers
             var db = new LibraryContext();
             db.Books.Add(newBook);
             db.SaveChanges();
+            // Tack properties on to the newBook and then return.
             newBook.Author = author;
             newBook.Genre = genre;
             return Ok(newBook);
