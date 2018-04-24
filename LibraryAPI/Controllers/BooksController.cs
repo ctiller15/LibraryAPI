@@ -35,20 +35,19 @@ namespace LibraryAPI.Controllers
                 {
                     if (!String.IsNullOrEmpty(book.BookTitle))
                     {
-                        query = query.Where(w => w.Title == book.BookTitle);
+                        query = query.Where(w => w.Title.Contains(book.BookTitle));
                     }
 
                     if (!String.IsNullOrEmpty(book.BookAuthor))
                     {
-                        query = query.Where(w => w.Author.Name == book.BookAuthor);
+                        query = query.Where(w => w.Author.Name.Contains(book.BookAuthor));
                     }
 
                     if (!String.IsNullOrEmpty(book.BookGenre))
                     {
-                        query = query.Where(w => w.Genre.DisplayName == book.BookGenre);
+                        query = query.Where(w => w.Genre.DisplayName.Contains(book.BookGenre));
                     }
                 }
-
 
                 return query.ToList();
             }
