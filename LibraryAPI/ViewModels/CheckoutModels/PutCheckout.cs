@@ -8,5 +8,6 @@ namespace LibraryAPI.ViewModels.CheckoutModels
     public class PutCheckout
     {
         public string Email { get; set; }
+        public string Mode { get; set; }
     }
 }
