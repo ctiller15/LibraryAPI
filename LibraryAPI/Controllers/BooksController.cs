@@ -77,6 +77,35 @@ namespace LibraryAPI.Controllers
             return Ok(newBook);
         }
 
+        [Route("api/books/checkoutin/{bookID}")]
+        [HttpPut]
+        public IHttpActionResult CheckBook([FromUri]int bookID, [FromBody]PutCheckout userCheckout) {
+            var db = new LibraryContext();
+            var BookToUpdate = db.Books.First(x => x.ID == bookID);
+
+            var checkout = new Checkout
+            {
+                TimeStamp = DateTime.Now,
+                Email = userCheckout.Email,
+            };
+
+            if(userCheckout.Mode == "checkout")
+            {
+                BookToUpdate.IsCheckedOut = true;
+                checkout.BookStatus = "checking out";
+            } else if(userCheckout.Mode == "checkin")
+            {
+                BookToUpdate.IsCheckedOut = false;
+                checkout.BookStatus = "checking in";
+            }
+
+            BookToUpdate.Checkout.Add(checkout);
+            var returnData = new PutCheckoutBody(BookToUpdate, checkout);
+
+            db.SaveChanges();
+            return Ok(returnData);
+        }
+
         // Not DRY at all...
         // PUT: Checkout an existing book.
         [Route("api/books/checkout/{ID?}")]
