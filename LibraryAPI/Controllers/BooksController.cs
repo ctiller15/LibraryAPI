@@ -17,8 +17,6 @@ namespace LibraryAPI.Controllers
 {
     public class BooksController : ApiController
     {
-
-
         // GET: Find a book based on title, author, or genre
         [Route("api/books")]
         [HttpGet]
@@ -43,7 +41,6 @@ namespace LibraryAPI.Controllers
         {
             Author author = DataChecks.CheckAuthor(book);
             Genre genre = DataChecks.CheckGenre(book);
-
 
             // The null value of DateTime is 0001, 01, 01.
             if (book.DueBackDate == new DateTime(0001,01,01))
@@ -77,6 +74,7 @@ namespace LibraryAPI.Controllers
             return Ok(newBook);
         }
 
+        //PUT: Check out or check in a book.
         [Route("api/books/checkoutin/{bookID}")]
         [HttpPut]
         public IHttpActionResult CheckBook([FromUri]int bookID, [FromBody]PutCheckout userCheckout) {
@@ -105,61 +103,6 @@ namespace LibraryAPI.Controllers
             db.SaveChanges();
             return Ok(returnData);
         }
-
-        // Not DRY at all...
-        // PUT: Checkout an existing book.
-        [Route("api/books/checkout/{ID?}")]
-        [HttpPut]
-        public IHttpActionResult CheckBookOut(string ID, PutCheckout userCheckout)
-        {
-            int bookID = Convert.ToInt32(ID);
-            var db = new LibraryContext();
-            var BookToUpdate = db.Books.First(x => x.ID == bookID);
-            BookToUpdate.IsCheckedOut = true;
-            // Create the checkout.
-            var checkout = new Checkout
-            {
-                //BookID = bookID,
-                TimeStamp = DateTime.Now,
-                Email = userCheckout.Email,
-                BookStatus = "Checking out"
-            };
-            BookToUpdate.Checkout.Add(checkout);
-            //db.Checkouts.Add(checkout);
-            var returnData = new PutCheckoutBody(BookToUpdate, checkout);
-
-            db.SaveChanges();
-            return Ok(returnData);
-        }
-
-        [Route("api/books/checkin/{ID?}")]
-        [HttpPut]
-        public IHttpActionResult CheckBookIn(string ID, PutCheckout userCheckin)
-        {
-            int bookID = Convert.ToInt32(ID);
-            var db = new LibraryContext();
-            var BookToUpdate = db.Books.First(x => x.ID == bookID);
-
-            BookToUpdate.IsCheckedOut = false;
-            // Create the checkin.
-            var checkin = new Checkout
-            {
-                TimeStamp = DateTime.Now,
-                Email = userCheckin.Email,
-                BookStatus = "Checking in"
-            };
-            BookToUpdate.Checkout.Add(checkin);
-
-            //Creating the return data.
-            //Turns out I needed another model for this.
-            // It may be possible and/or ideal to just make sure your first model functions for both the request and the response.
-            // The database model should not be returned.
-            var returnData = new PutCheckoutBody(BookToUpdate, checkin);
-
-            db.SaveChanges();
-            return Ok(returnData);
-        }
-
 
     }
 }

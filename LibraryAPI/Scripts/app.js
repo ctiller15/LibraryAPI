@@ -104,9 +104,10 @@ angular.module("LibraryApp", [])
             console.log(id, type);
             return $http({
                 method: "PUT",
-                url: `/api/books/${type}/${id}`,
+                url: `/api/books/checkoutin/${id}`,
                 data: {
-                    Email: email
+                    Email: email,
+                    Mode: type
                 }
             }).then(response => {
                 console.log(response);
